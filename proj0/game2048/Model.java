@@ -139,20 +139,14 @@ public class Model extends Observable {
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
         // Create a while loop to go over the 4 rows
-        int search = 0;
-        int column = 0;
-        while ( search < 3) ++search;{
-            while ( column < 3) ++column; {
-                System.out.println(column);
-                if ( b.tile(search, column) == null ) {
+        for ( int row = 0; row < 4; row++) {
+            for ( int col = 0; col < 4; col++) {
+                if (b.tile(col, row) == null) {
                     return true;
                 }
-                else {
-                    return false;
-                }
-
             }
-
+        }
+        return false;
         }
             // Create a while loop to search element in row
         // A total of 16 searches can be made
@@ -161,7 +155,7 @@ public class Model extends Observable {
         // Once at 0, 4
         // Go up to 1,0
         // Search to the right, etc.
-    }
+
 
     /**
      * Returns true if any tile is equal to the maximum valid value.
