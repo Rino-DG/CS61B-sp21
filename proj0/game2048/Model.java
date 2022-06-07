@@ -138,7 +138,29 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
-        return false;
+        // Create a while loop to go over the 4 rows
+        int search = 0;
+        int column = 0;
+        while ( search < 3) ++search;{
+            while ( column < 3) ++column; {
+                System.out.println(column);
+                if ( b.tile(search, column) == null ) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
+            }
+
+        }
+            // Create a while loop to search element in row
+        // A total of 16 searches can be made
+        // Start at 0, 0
+        // Search to the right
+        // Once at 0, 4
+        // Go up to 1,0
+        // Search to the right, etc.
     }
 
     /**
