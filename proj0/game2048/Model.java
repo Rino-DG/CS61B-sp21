@@ -138,7 +138,7 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
-        // Create a while loop to go over the 4 rows
+        // Create a for loop to go over the 4 rows
         for ( int row = 0; row < 4; row++) {
             for ( int col = 0; col < 4; col++) {
                 if (b.tile(col, row) == null) {
@@ -185,15 +185,36 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
-        for ( int row = 0; row < 4; row++) {
+        boolean same_val = false;
+
+        // Create a for loop to go through each column and row
+        for (int row = 0; row < 4; row++) {
             for ( int col = 0; col < 4; col++) {
+
+                // Check if the tile is empty
                 if (b.tile(col, row) == null) {
                     return true;
                 }
+
+                // Check for the tile directly above row
+                if (row < 3) {
+                    if (b.tile(col, row).value() == b.tile(col, row + 1).value()) {
+                        System.out.println("Tile matches");
+                        return true;
+                    }
+                }
+
+                // Check for the tile to the right if they are the same
+                if (col < 3) {
+                    if (b.tile(col, row).value() == b.tile(col + 1, row).value()) {
+                        return true;
+                    }
+                }
+
+
             }
         }
-
-        return false;
+        return same_val;
     }
 
 
