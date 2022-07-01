@@ -114,6 +114,39 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        // Create a helper method that would process a column
+        // Iterate starting from the 3rd row and go downwards
+
+        // Experiment with the first column
+        // Iterate through row starting from (col 0, row 3) then through each column, and down each row
+
+        // Starting with column 0, row 3
+        board.setViewingPerspective(side);
+        for ( int col = 0; col < 4; col++) {
+            for ( int row = 3; row > -1; row-- ) {
+                Tile t = board.tile(col, row);
+                if (row < 3) {
+                    if (board.tile(col, row) != null) {
+                        if (board.tile(col, row + 1) == null) {
+                            board.move(col, row + 1, t);
+                            changed = true;
+                            score += 3;
+                        } else if (board.tile(col, row).value() == board.tile(col, row + 1).value()) {
+                            board.move(col, row + 1, t);
+                            changed = true;
+                            score += 3;
+                        }
+                    }
+                }
+
+            }
+        }
+        board.setViewingPerspective(Side.NORTH);
+
+        // If the row is null, count the number of null spaces below that row
+            // If the tile is not null, break
+        // Subtract that number from the tile's row
+
 
 
         checkGameOver();
@@ -198,10 +231,35 @@ public class Model extends Observable {
                     return true;
                 }
 
-                // Check for the tile directly above row
+                // BUG that creates a null pointer exception
+
+//                // Check for the tile directly above row
+//                if (row < 3) {
+//                    if (b.tile(col, row).value() == b.tile(col, row + 1).value()) {
+//                        return true;
+//                    }
+//                }
+//
+//                // Check for the tile to the right if they are the same
+//                if (col < 3) {
+//                    if (b.tile(col, row).value() == b.tile(col + 1, row).value()) {
+//                        return true;
+//                    }
+//                }
+
+
+            }
+        }
+
+        // After checking if there is an empty tile in the whole board
+        // Using another nested for loop to check if there are any valid moves
+
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
+
+                // Check for the tile directly above
                 if (row < 3) {
                     if (b.tile(col, row).value() == b.tile(col, row + 1).value()) {
-                        System.out.println("Tile matches");
                         return true;
                     }
                 }
@@ -213,9 +271,10 @@ public class Model extends Observable {
                     }
                 }
 
-
             }
         }
+
+
         return same_val;
     }
 
