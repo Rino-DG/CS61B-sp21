@@ -114,25 +114,23 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
-        // Create a helper method that would process a column
-        // Iterate starting from the 3rd row and go downwards
-
-        // Experiment with the first column
-        // Iterate through row starting from (col 0, row 3) then through each column, and down each row
 
         // Starting with column 0, row 3
         board.setViewingPerspective(side);
-        for ( int col = 0; col < 4; col++) {
+        // Nested for loop that goes through each row then column, starting from the top row
+        for ( int col = 0; col < board.size(); col++) {
             for ( int row = 3; row > -1; row-- ) {
-                Tile t = board.tile(col, row);
+
+                Tile tile = board.tile(col, row);
+
                 if (row < 3) {
-                    if (board.tile(col, row) != null) {
+                    if (tile != null) {
                         if (board.tile(col, row + 1) == null) {
-                            board.move(col, row + 1, t);
+                            board.move(col, row + 1, tile);
                             changed = true;
                             score += 3;
-                        } else if (board.tile(col, row).value() == board.tile(col, row + 1).value()) {
-                            board.move(col, row + 1, t);
+                        } else if (tile.value() == board.tile(col, row + 1).value()) {
+                            board.move(col, row + 1, tile);
                             changed = true;
                             score += 3;
                         }
@@ -143,9 +141,7 @@ public class Model extends Observable {
         }
         board.setViewingPerspective(Side.NORTH);
 
-        // If the row is null, count the number of null spaces below that row
-            // If the tile is not null, break
-        // Subtract that number from the tile's row
+        // Create a method that returns a desired row value
 
 
 
@@ -174,8 +170,8 @@ public class Model extends Observable {
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
         // Create a for loop to go over the 4 rows
-        for ( int row = 0; row < 4; row++) {
-            for ( int col = 0; col < 4; col++) {
+        for ( int row = 0; row < b.size(); row++) {
+            for ( int col = 0; col < b.size(); col++) {
                 if (b.tile(col, row) == null) {
                     return true;
                 }
@@ -222,40 +218,15 @@ public class Model extends Observable {
         // TODO: Fill in this function.
         boolean same_val = false;
 
-        // Create a for loop to go through each column and row
-        for (int row = 0; row < 4; row++) {
-            for ( int col = 0; col < 4; col++) {
-
-                // Check if the tile is empty
-                if (b.tile(col, row) == null) {
-                    return true;
-                }
-
-                // BUG that creates a null pointer exception
-
-//                // Check for the tile directly above row
-//                if (row < 3) {
-//                    if (b.tile(col, row).value() == b.tile(col, row + 1).value()) {
-//                        return true;
-//                    }
-//                }
-//
-//                // Check for the tile to the right if they are the same
-//                if (col < 3) {
-//                    if (b.tile(col, row).value() == b.tile(col + 1, row).value()) {
-//                        return true;
-//                    }
-//                }
-
-
-            }
+        if (emptySpaceExists(b)) {
+            return true;
         }
 
         // After checking if there is an empty tile in the whole board
         // Using another nested for loop to check if there are any valid moves
 
-        for (int row = 0; row < 4; row++) {
-            for (int col = 0; col < 4; col++) {
+        for (int row = 0; row < b.size(); row++) {
+            for (int col = 0; col < b.size(); col++) {
 
                 // Check for the tile directly above
                 if (row < 3) {
