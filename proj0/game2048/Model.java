@@ -151,9 +151,22 @@ public class Model extends Observable {
         for (int r = row; r < 3; r ++) {
             if (board.tile(col, r + 1) == null) {
                 nullcounter ++;
+            }else if (board.tile(col, r + 1) != null) {
+                if (sameval(col, r + 1, row)) {
+                    return r + 1;
+                }
             }
         }
         return nullcounter + row;
+    }
+
+    public boolean sameval(int col, int rowchecking, int ogrow) {
+        if (board.tile(col, ogrow).value() == board.tile(col, rowchecking).value()) {
+            score += board.tile(col, rowchecking).value() * 2;
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
