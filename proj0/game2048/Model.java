@@ -147,16 +147,33 @@ public class Model extends Observable {
     }
 
     public int desiredrow(int col, int row) {
+        // Initialize nullcounter variable to count the amount of nulltiles above the ogtile.
         int nullcounter = 0;
+        // Initialize original tile
+        Tile ogtile = board.tile(col, row);
+
+        // For each tile that is between the ogtile and the top row...
         for (int r = row; r < 3; r ++) {
-            if (board.tile(col, r + 1) == null) {
+            // Prospect row is each row that is above the ogtile
+            int prospect_row = r +1;
+            // Initialize prospect tile
+            Tile prospect_tile = board.tile(col, prospect_row);
+            // If the tile above r is null, add 1 to the null counter
+
+            if (prospect_tile == null) {
                 nullcounter ++;
-            }else if (board.tile(col, r + 1) != null) {
-                if (sameval(col, r + 1, row)) {
-                    return r + 1;
+            // If the tile above r is not null, call the same val method
+            }else if (board.tile(col, prospect_row) != null) {
+                // If sameval method is true, return the r + 1
+                if (sameval(col, prospect_row, row)) {
+                    return prospect_row;
                 }
             }
         }
+
+
+        // Basically, if the tile is not null and not the same value as the ogtile,
+        // return the row under that one.
         return nullcounter + row;
     }
 
