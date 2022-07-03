@@ -1,6 +1,7 @@
 package game2048;
 
 import java.util.Formatter;
+import java.util.HashSet;
 import java.util.Observable;
 
 
@@ -109,6 +110,7 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
+        HashSet<Tile> mergedtiles = new HashSet<>();
 
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
@@ -123,10 +125,14 @@ public class Model extends Observable {
 
                 Tile tile = board.tile(col, row);
 
+
                 if (row < 3) {
                     if (tile != null) {
-                        int torow = desiredrow(col, row);
-                        board.move(col, torow, tile);
+                        int torow = desiredrow(col, row, mergedtiles);
+                        if(board.move(col, torow, tile)) {
+                            Tile mergedtile = board.tile(col, torow);
+                            mergedtiles.add(mergedtile);
+                        }
                         changed = true;
                     }
                 }
@@ -146,11 +152,12 @@ public class Model extends Observable {
         return changed;
     }
 
-    public int desiredrow(int col, int row) {
+    public int desiredrow(int col, int row, HashSet<Tile> setname) {
         // Initialize nullcounter variable to count the amount of nulltiles above the ogtile.
         int nullcounter = 0;
         // Initialize original tile
         Tile ogtile = board.tile(col, row);
+        HashSet<Tile> mergedtiles = setname;
 
         // For each tile that is between the ogtile and the top row...
         for (int r = row; r < 3; r ++) {
@@ -165,7 +172,7 @@ public class Model extends Observable {
             // If the tile above r is not null, call the same val method
             }else if (board.tile(col, prospect_row) != null) {
                 // If sameval method is true, return the r + 1
-                if (sameval(col, prospect_row, row)) {
+                if (sameval(ogtile, prospect_tile, mergedtiles)) {
                     return prospect_row;
                 }
             }
@@ -177,14 +184,18 @@ public class Model extends Observable {
         return nullcounter + row;
     }
 
-    public boolean sameval(int col, int rowchecking, int ogrow) {
-        if (board.tile(col, ogrow).value() == board.tile(col, rowchecking).value()) {
-            score += board.tile(col, rowchecking).value() * 2;
+    // Boolean method that returns wether the ogtile and prospect tile is the same.
+    public boolean sameval(Tile tile, Tile prospecttile, HashSet<Tile> setname) {
+        HashSet<Tile> mergedtiles = setname;
+        if (tile.value() == prospecttile.value() && (!mergedtiles.contains(prospecttile))) {
+            score += prospecttile.value() * 2;
             return true;
         } else {
             return false;
         }
     }
+
+
 
 
     /** Checks if the game is over and sets the gameOver variable
