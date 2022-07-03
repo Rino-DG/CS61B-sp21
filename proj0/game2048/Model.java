@@ -125,15 +125,9 @@ public class Model extends Observable {
 
                 if (row < 3) {
                     if (tile != null) {
-                        if (board.tile(col, row + 1) == null) {
-                            board.move(col, row + 1, tile);
-                            changed = true;
-                            score += 3;
-                        } else if (tile.value() == board.tile(col, row + 1).value()) {
-                            board.move(col, row + 1, tile);
-                            changed = true;
-                            score += 3;
-                        }
+                        int torow = desiredrow(col, row);
+                        board.move(col, torow, tile);
+                        changed = true;
                     }
                 }
 
@@ -151,6 +145,17 @@ public class Model extends Observable {
         }
         return changed;
     }
+
+    public int desiredrow(int col, int row) {
+        int nullcounter = 0;
+        for (int r = row; r < 3; r ++) {
+            if (board.tile(col, r + 1) == null) {
+                nullcounter ++;
+            }
+        }
+        return nullcounter + row;
+    }
+
 
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
