@@ -70,16 +70,19 @@ public class IntListExercises {
      */
     public static boolean squarePrimes(IntList lst) {
         // Base Case: we have reached the end of the list
+        boolean somethingchanged = false;
         if (lst == null) {
             return false;
         }
-
         boolean currElemIsPrime = Primes.isPrime(lst.first);
 
         if (currElemIsPrime) {
             lst.first *= lst.first;
+            somethingchanged = true;
+            squarePrimes(lst.rest);
+            return true;
         }
 
-        return currElemIsPrime || squarePrimes(lst.rest);
+        return somethingchanged || squarePrimes(lst.rest);
     }
 }
