@@ -40,7 +40,7 @@ public class LinkedListDeque<ChosenOne> {
 
     // Constructor that creates a node with int x as the item, and null as the next.
     public LinkedListDeque(ChosenOne x) {
-        sentinel = new StuffNode(x, null);
+        sentinel.next = new StuffNode(x, null);
         size = 1;
     }
 
@@ -74,16 +74,6 @@ public class LinkedListDeque<ChosenOne> {
         return size;
     }
 
-
-    public static void main(String[] args) {
-        LinkedListDeque<String> newlist = new LinkedListDeque<>();
-//        newlist.addFirst(2);
-//        newlist.addFirst(3);
-//        System.out.println(newlist.getFirst());
-//        System.out.println(newlist.size());
-        newlist.addLast("Bruh");
-        System.out.println(newlist.size());
-    }
 
 
 }
