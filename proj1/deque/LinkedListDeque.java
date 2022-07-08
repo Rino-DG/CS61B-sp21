@@ -74,6 +74,10 @@ public class LinkedListDeque<ChosenOne> {
         return size;
     }
 
+    public boolean isEmpty() {
+        return size <= 0;
+    }
+
     public static void main(String[] args) {
         LinkedListDeque<Integer> intllist = new LinkedListDeque<>();
         intllist.addLast(5);
