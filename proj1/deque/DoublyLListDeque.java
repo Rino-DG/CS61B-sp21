@@ -165,14 +165,4 @@ public class DoublyLListDeque<TheForce> {
     }
 
 
-
-
-    public static void main(String[] args) {
-        DoublyLListDeque<Integer> test = new DoublyLListDeque<>();
-        test.addFirst(9);
-        test.addFirst(5);
-        test.addLast(4);
-        System.out.println(test.getRecursive(1));
-    }
-
 }

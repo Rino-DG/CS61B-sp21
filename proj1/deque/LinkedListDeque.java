@@ -1,72 +1,38 @@
 package deque;
 
-public class LinkedListDeque<ChosenOne> {
-    // Add and Remove operations must not involve looping or recursion
-    // Get must use iteration, not recursion
-    // Do not maintain references to items that are no longer in the deque
+public class LinkedListDeque<TheForce> {
 
-    // 10 Methods to implement
-    // Dont forget to implement 2 more methods
-        // LinkedListDeque(): Creates an empty linked list deque
-        // getRecursive(int index): Same as get, but uses recursion
+    public class d_node {
 
-    // Implement Circular sentinel topology
-
-    // Nesting the IntNode class
-
-    // Experimenting with SLL
-    // The first item (if it exists) is at sentinel.next
+        public d_node prev;
+        public TheForce item;
+        public d_node next;
 
 
-    public class StuffNode {
-        public StuffNode prev;
-        public ChosenOne item;
-        public StuffNode next;
+        public d_node() {
+            prev = null;
+            item = null;
+            next = null;
+        }
 
-        public StuffNode(ChosenOne x, StuffNode n) {
-            item = x;
+
+        public d_node(d_node p, TheForce i, d_node n) {
+            prev = p;
+            item = i;
             next = n;
         }
+
     }
 
-    public StuffNode sentinel;
+
+    private d_node sentinel;
     private int size;
 
-    // Constructor that creates an empty list
-    public LinkedListDeque() {
-        sentinel = new StuffNode(null, null);
+    /* Constructor that creates an empty linked list */
+    LinkedListDeque() {
+        sentinel = null;
+        sentinel = new d_node();
         size = 0;
-    }
-
-    // Constructor that creates a node with int x as the item, and null as the next.
-    public LinkedListDeque(ChosenOne x) {
-        sentinel = new StuffNode(x, null);
-        size = 1;
-    }
-
-    // Adds an item to the front of the list
-    public void addFirst(ChosenOne x) {
-        sentinel.next = new StuffNode(x, sentinel.next);
-        size += 1;
-    }
-
-    // Returns the first item of the list
-    public ChosenOne getFirst() {
-        return sentinel.next.item;
-    }
-
-    // Add an item to the end of the list
-    public void addLast(ChosenOne x) {
-        size += 1;
-
-        StuffNode p = sentinel;
-
-        // Move p until it reaches the end of the list
-        while (p.next != null) {
-            p = p.next;
-        }
-
-        p.next = new StuffNode(x, null);
     }
 
 
@@ -74,15 +40,127 @@ public class LinkedListDeque<ChosenOne> {
         return size;
     }
 
+
     public boolean isEmpty() {
         return size <= 0;
     }
 
-    public static void main(String[] args) {
-        LinkedListDeque<Integer> intllist = new LinkedListDeque<>();
-        intllist.addLast(5);
-        System.out.println("This is the first item of the linked list: " + intllist.getFirst());
-        System.out.println("Size of linked list: " + intllist.size());
+
+    public void printDeque() {
+        d_node p = sentinel;
+        for (int i = 0; i < size ; i++) {
+            System.out.print(p.next.item + " ");
+            p = p.next;
+        }
+        System.out.println();
     }
+
+
+    public void addFirst(TheForce i) {
+        d_node new_node = new d_node(null, i, null);
+        if (sentinel.next == null) {
+            new_node.prev = new_node;
+            sentinel.next = new_node;
+            new_node.next = sentinel.next;
+            sentinel.prev = new_node;
+
+        } else {
+            new_node.prev = sentinel.prev;
+            sentinel.prev.next = new_node;
+            sentinel.next.prev = new_node;
+            new_node.next = sentinel.next;
+            sentinel.next = new_node;
+
+        }
+        size += 1;
+    }
+
+    /* Adds an item to the back of the deque */
+    public void addLast(TheForce i) {
+        if (sentinel.next == null) {
+            addFirst(i);
+        } else {
+            d_node new_node = new d_node(null, i, null);
+            new_node.prev = sentinel.prev;
+            sentinel.prev.next = new_node;
+            sentinel.next.prev = new_node;
+            new_node.next = sentinel.next;
+            sentinel.prev = new_node;
+            size += 1;
+        }
+
+    }
+
+
+    public TheForce removeFirst() {
+        d_node byenode = new d_node();
+        byenode.next = sentinel.next;
+        if (isEmpty()) {
+            return null;
+        } else {
+            sentinel.next = sentinel.next.next;
+            sentinel.next.prev = sentinel.prev;
+            sentinel.prev.next = sentinel.next;
+            byenode.next.next = null;
+            byenode.next.prev = null;
+            size -= 1;
+        }
+        return byenode.next.item;
+    }
+
+    public TheForce removeLast() {
+        d_node byenode = new d_node();
+        byenode.next = sentinel.prev;
+        if (isEmpty()) {
+            return null;
+        } else {
+            sentinel.prev = sentinel.prev.prev;
+            sentinel.prev.next = sentinel.next;
+            sentinel.next.prev = sentinel.prev;
+            byenode.next.next = null;
+            byenode.next.prev = null;
+            size -= 1;
+        }
+        return byenode.next.item;
+    }
+
+
+    public TheForce get(int index) {
+        if (isEmpty()) {
+            return null;
+        } else if (index >= size) {
+            return null;
+        } else {
+            d_node p = sentinel;
+            for (int i = 0; i <= index; i++) {
+                p = p.next;
+            }
+            return p.item;
+        }
+    }
+
+
+    public TheForce getRecursive(int index) {
+        d_node p = sentinel;
+        if (isEmpty()) {
+            return null;
+        } else if (index >= size) {
+            return null;
+        } else if (index == 0) {
+            return p.next.item;
+        }
+        p = p.next;
+        return getRecursive(index - 1, p);
+    }
+
+    private TheForce getRecursive(int index, d_node p) {
+        if (index == 0) {
+            return p.next.item;
+        } else {
+            p = p.next;
+            return getRecursive(index - 1, p);
+        }
+    }
+
 
 }
