@@ -1,5 +1,6 @@
 package deque;
 
+import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -7,34 +8,46 @@ import static org.junit.Assert.*;
 /** Performs some basic linked list tests. */
 public class LinkedListDequeTest {
 
-    @Test
+//    @Test
     /** Adds a few things to the list, checking isEmpty() and size() are correct,
      * finally printing the results.
      *
      * && is the "and" operation. */
-    public void addIsEmptySizeTest() {
-
-
-        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
-
-		assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
-		lld1.addFirst("front");
-
-		// The && operator is the same as "and" in Python.
-		// It's a binary operator that returns true if both arguments true, and false otherwise.
-        assertEquals(1, lld1.size());
-        assertFalse("lld1 should now contain 1 item", lld1.isEmpty());
-
-		lld1.addLast("middle");
-		assertEquals(2, lld1.size());
-
-		lld1.addLast("back");
-		assertEquals(3, lld1.size());
-
-		System.out.println("Printing out deque: ");
-		lld1.printDeque();
-
-    }
+//    public void addIsEmptySizeTest() {
+//
+//
+//        LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
+//        ArrayDeque<String> arr_d = new ArrayDeque<>();
+//
+//		assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
+//        assertTrue("A newly initialized ADeque should be empty",  arr_d.isEmpty());
+//		lld1.addFirst("front");
+//        arr_d.addFirst("first");
+//
+//		// The && operator is the same as "and" in Python.
+//		// It's a binary operator that returns true if both arguments true, and false otherwise.
+//        assertEquals(1, lld1.size());
+//        assertFalse("lld1 should now contain 1 item", lld1.isEmpty());
+//        assertEquals(1, arr_d.size());
+//        assertFalse("arr_d should now contain 1 item", arr_d.isEmpty());
+//
+//
+//        lld1.addLast("middle");
+//        arr_d.addLast("second");
+//		assertEquals(2, lld1.size());
+//        assertEquals(2, arr_d.size());
+//
+//		lld1.addLast("back");
+//        arr_d.addLast("last");
+//		assertEquals(3, lld1.size());
+//        assertEquals(3, arr_d.size());
+//
+//		System.out.println("Printing out Linked List deque: ");
+//		lld1.printDeque();
+//        System.out.println("Printing out Array List deque: ");
+//        arr_d.printDeque();
+//
+//    }
 
     @Test
     /** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
@@ -119,6 +132,32 @@ public class LinkedListDequeTest {
 
         for (double i = 999999; i > 500000; i--) {
             assertEquals("Should have the same value", i, (double) lld1.removeLast(), 0.0);
+        }
+
+    }
+
+    @Test
+    public void ArrayaddLastTest() {
+
+        ArrayDeque<String> array_test = new ArrayDeque<>();
+
+        array_test.addLast("a");
+        array_test.addLast("b");
+        array_test.addLast("c");
+
+        assertEquals("a", array_test.get(5));
+        assertEquals("c", array_test.get(7));
+        assertEquals("c", array_test.removeLast());
+
+        ArrayDeque<Integer> array_test2 = new ArrayDeque<>();
+
+        for (int i = 0; i < 9; i++) {
+            int opnumber = StdRandom.uniform(0, 2);
+            if (opnumber == 0) {
+                array_test2.addLast(i);
+            } else {
+                array_test2.addFirst(i);
+            }
         }
 
     }

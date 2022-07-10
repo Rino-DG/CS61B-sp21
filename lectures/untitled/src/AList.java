@@ -27,7 +27,7 @@ public class AList<Item> {
     }
 
     /** Inserts X into the back of the list. */
-    public void addLast(int x) {
+    public void addLast(Item x) {
         if (size == items.length) {
             resize(size * RFACTOR);
         }
