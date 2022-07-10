@@ -1,11 +1,11 @@
 package deque;
 
-public class LinkedListDeque<TheForce> {
+public class LinkedListDeque<T> {
 
     public class d_node {
 
         public d_node prev;
-        public TheForce item;
+        public T item;
         public d_node next;
 
 
@@ -16,7 +16,7 @@ public class LinkedListDeque<TheForce> {
         }
 
 
-        public d_node(d_node p, TheForce i, d_node n) {
+        public d_node(d_node p, T i, d_node n) {
             prev = p;
             item = i;
             next = n;
@@ -56,7 +56,7 @@ public class LinkedListDeque<TheForce> {
     }
 
 
-    public void addFirst(TheForce i) {
+    public void addFirst(T i) {
         d_node new_node = new d_node(null, i, null);
         if (sentinel.next == null) {
             new_node.prev = new_node;
@@ -76,7 +76,7 @@ public class LinkedListDeque<TheForce> {
     }
 
     /* Adds an item to the back of the deque */
-    public void addLast(TheForce i) {
+    public void addLast(T i) {
         if (sentinel.next == null) {
             addFirst(i);
         } else {
@@ -92,7 +92,7 @@ public class LinkedListDeque<TheForce> {
     }
 
 
-    public TheForce removeFirst() {
+    public T removeFirst() {
         d_node byenode = new d_node();
         byenode.next = sentinel.next;
         if (isEmpty()) {
@@ -108,7 +108,7 @@ public class LinkedListDeque<TheForce> {
         return byenode.next.item;
     }
 
-    public TheForce removeLast() {
+    public T removeLast() {
         d_node byenode = new d_node();
         byenode.next = sentinel.prev;
         if (isEmpty()) {
@@ -125,7 +125,7 @@ public class LinkedListDeque<TheForce> {
     }
 
 
-    public TheForce get(int index) {
+    public T get(int index) {
         if (isEmpty()) {
             return null;
         } else if (index >= size) {
@@ -140,7 +140,7 @@ public class LinkedListDeque<TheForce> {
     }
 
 
-    public TheForce getRecursive(int index) {
+    public T getRecursive(int index) {
         d_node p = sentinel;
         if (isEmpty()) {
             return null;
@@ -153,7 +153,7 @@ public class LinkedListDeque<TheForce> {
         return getRecursive(index - 1, p);
     }
 
-    private TheForce getRecursive(int index, d_node p) {
+    private T getRecursive(int index, d_node p) {
         if (index == 0) {
             return p.next.item;
         } else {
