@@ -1,6 +1,6 @@
 package deque;
 
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T> {
 
     public class d_node {
 
@@ -35,17 +35,14 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-
+    @Override
     public int size() {
         return size;
     }
 
 
-    public boolean isEmpty() {
-        return size <= 0;
-    }
 
-
+    @Override
     public void printDeque() {
         d_node p = sentinel;
         for (int i = 0; i < size ; i++) {
@@ -55,7 +52,7 @@ public class LinkedListDeque<T> {
         System.out.println();
     }
 
-
+    @Override
     public void addFirst(T i) {
         d_node new_node = new d_node(null, i, null);
         if (sentinel.next == null) {
@@ -75,6 +72,7 @@ public class LinkedListDeque<T> {
         size += 1;
     }
 
+    @Override
     /* Adds an item to the back of the deque */
     public void addLast(T i) {
         if (sentinel.next == null) {
@@ -91,12 +89,16 @@ public class LinkedListDeque<T> {
 
     }
 
-
+    @Override
     public T removeFirst() {
         d_node byenode = new d_node();
         byenode.next = sentinel.next;
         if (isEmpty()) {
             return null;
+        } else if (size == 1) {
+            sentinel.next = null;
+            sentinel.prev = null;
+            size -= 1;
         } else {
             sentinel.next = sentinel.next.next;
             sentinel.next.prev = sentinel.prev;
@@ -108,6 +110,7 @@ public class LinkedListDeque<T> {
         return byenode.next.item;
     }
 
+    @Override
     public T removeLast() {
         d_node byenode = new d_node();
         byenode.next = sentinel.prev;
@@ -124,7 +127,7 @@ public class LinkedListDeque<T> {
         return byenode.next.item;
     }
 
-
+    @Override
     public T get(int index) {
         if (isEmpty()) {
             return null;

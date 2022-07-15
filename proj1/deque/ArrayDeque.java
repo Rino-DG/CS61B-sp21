@@ -1,8 +1,8 @@
 package deque;
 
-public class ArrayDeque<Item> {
+public class ArrayDeque<T> implements Deque<T> {
 
-    private Item[] items;
+    private T[] items;
     private int size;
     private int REFACTOR = 2;
     private int nextFirst = 0;
@@ -12,19 +12,18 @@ public class ArrayDeque<Item> {
 
 
     public ArrayDeque() {
-        items = (Item[]) new Object[capacity];
+        items = (T[]) new Object[capacity];
         size = 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
-    public boolean isEmpty() {
-        return size <= 0;
-    }
 
 
+    @Override
     public void printDeque() {
         for (int i = 0; i < size; i++) {
             int index = (starting_index + i) % capacity;
@@ -33,7 +32,8 @@ public class ArrayDeque<Item> {
         System.out.println();
     }
 
-    public Item get(int index) {
+    @Override
+    public T get(int index) {
         /* If the item does not exist, return null*/
         if (index >= size) {
             return null;
@@ -52,8 +52,10 @@ public class ArrayDeque<Item> {
 //        items = a;
 //    }
 
+
     /** Inserts X into the back of the list. */
-    public void addLast(Item x) {
+    @Override
+    public void addLast(T x) {
         if (isEmpty()) {
             items[starting_index] = x;
             size += 1;
@@ -70,8 +72,8 @@ public class ArrayDeque<Item> {
     }
 
 
-
-    public void addFirst(Item x) {
+    @Override
+    public void addFirst(T x) {
         if (isEmpty()) {
             items[starting_index] = x;
             size += 1;
@@ -93,13 +95,13 @@ public class ArrayDeque<Item> {
         }
     }
 
-
-    public Item removeLast() {
+    @Override
+    public T removeLast() {
         if (isEmpty()) {
             return null;
         }
         /* Get the last ITEM and the INDEX of the item */
-        Item x = getLast();
+        T x = getLast();
         int last_index = getLastIndex();
 
         /* Delete the last ITEM and decrement the size */
@@ -109,13 +111,13 @@ public class ArrayDeque<Item> {
         return x;
     }
 
-
-    public Item removeFirst() {
+    @Override
+    public T removeFirst() {
         if(isEmpty()) {
             return null;
         }
         /* Get the first ITEM and the INDEX of the item */
-        Item x = getFirst();
+        T x = getFirst();
 
         /* Delete the first ITEM and decrement the size */
         items[starting_index] = null;
@@ -124,6 +126,10 @@ public class ArrayDeque<Item> {
 
 
         return x;
+    }
+
+    private void resize() {
+
     }
 
     private void inc_nF() {
@@ -137,12 +143,11 @@ public class ArrayDeque<Item> {
     }
 
 
-
-    private Item getLast() {
+    private T getLast() {
         return items[(starting_index + size - 1) % capacity];
     }
 
-    private Item getFirst() {
+    private T getFirst() {
         return items[starting_index];
     }
 
