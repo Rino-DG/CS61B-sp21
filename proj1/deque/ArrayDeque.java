@@ -43,16 +43,6 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
 
-
-
-    /* Adds to the last index of the array */
-//    private void resize(int capacity) {
-//        Item[] a = (Item[]) new Object[capacity];
-//        System.arraycopy(items, 0, a,size,  size);
-//        items = a;
-//    }
-
-
     /** Inserts X into the back of the list. */
     @Override
     public void addLast(T x) {
@@ -62,6 +52,9 @@ public class ArrayDeque<T> implements Deque<T> {
         } else {
             items[nextLast] = x;
             size += 1;
+            if (size == capacity) {
+                resizeL(size * REFACTOR);
+            }
             adjust_nL();
         }
 
@@ -72,6 +65,7 @@ public class ArrayDeque<T> implements Deque<T> {
     }
 
 
+
     @Override
     public void addFirst(T x) {
         if (isEmpty()) {
@@ -80,8 +74,35 @@ public class ArrayDeque<T> implements Deque<T> {
         } else {
             items[nextFirst] = x;
             size += 1;
+            if (size == capacity) {
+                nextLast = capacity;
+                resizeF(size * REFACTOR);
+            }
             adjust_nF();
         }
+
+    }
+
+    private void resizeF(int newcapacity) {
+        T[] a = (T[]) new Object[newcapacity];
+        System.arraycopy(items, 0, a, 0, size);
+        items = a;
+        capacity = newcapacity;
+        nextFirst = newcapacity - 1;
+        starting_index = 1;
+    }
+
+    private void resizeL(int newcapacity) {
+        T[] a = (T[]) new Object[newcapacity];
+        int k = starting_index;
+        for (int i = 0; i < size; i++) {
+            a[i] = items[k];
+            k = (k + 1) % items.length;
+        }
+        items = a;
+        starting_index = 0;
+        nextFirst = newcapacity - 1;
+        capacity = newcapacity;
 
     }
 
@@ -128,9 +149,7 @@ public class ArrayDeque<T> implements Deque<T> {
         return x;
     }
 
-    private void resize() {
 
-    }
 
     private void inc_nF() {
         nextFirst++;

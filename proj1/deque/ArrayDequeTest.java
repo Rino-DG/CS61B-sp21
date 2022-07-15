@@ -1,6 +1,7 @@
 package deque;
 
 import edu.princeton.cs.algs4.StdRandom;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 
 import java.lang.reflect.Array;
@@ -137,5 +138,20 @@ public class ArrayDequeTest {
         }
 
     }
+
+    @Test
+    public void resizeTest() {
+        ArrayDeque<Integer> rTArray = new ArrayDeque<>();
+
+        for (int i = 0; i < 7; i++) {
+            rTArray.addFirst(i);
+        }
+        for (int i = 7; i < 11; i++) {
+            rTArray.addLast(i);
+        }
+        rTArray.addFirst(69);
+        System.out.println(rTArray.get(0));
+    }
+
 
 }
