@@ -1,10 +1,12 @@
 package deque;
 
+import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import edu.princeton.cs.algs4.StdRandom;
 import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 
 import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -153,5 +155,45 @@ public class ArrayDequeTest {
         System.out.println(rTArray.get(0));
     }
 
+    @Test
+    public void iteratorTest() {
 
+        ArrayDeque<Integer> iTArray = new ArrayDeque<>();
+
+        iTArray.addFirst(0);
+        iTArray.addLast(10);
+        iTArray.addLast(30);
+
+        for (int item: iTArray) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    public void sizedownTest() {
+
+        ArrayDeque<Integer> sdArray = new ArrayDeque<>();
+
+
+        for (int i = 0; i < 17; i ++) {
+            sdArray.addLast(i);
+        }
+
+        for (int i = 0; i < 17; i ++) {
+            sdArray.removeLast();
+        }
+
+        assertEquals(0, sdArray.size());
+    }
+
+    @Test
+    public void addWithResizingTest() {
+        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+
+        for (int i = 0; i < 20; i++) {
+            arrayDeque.addLast(i);
+        }
+
+        assertEquals("Should have size 20", 20, arrayDeque.size());
+    }
 }

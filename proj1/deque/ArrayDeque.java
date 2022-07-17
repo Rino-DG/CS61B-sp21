@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T>  {
 
     private T[] items;
     private int size;
@@ -9,6 +11,7 @@ public class ArrayDeque<T> implements Deque<T> {
     private int nextLast = 2;
     private int starting_index = 1;
     private int capacity = 8;
+
 
 
     public ArrayDeque() {
@@ -106,6 +109,17 @@ public class ArrayDeque<T> implements Deque<T> {
 
     }
 
+
+    private void sizedown() {
+        if (isEmpty()) {
+            capacity = 8;
+            items = (T[]) new Object[capacity];
+            nextFirst = size;
+        } else if (items.length / 4 > size && size >= 4) {
+            resizeL(size * 2);
+        }
+    }
+
     private void adjust_nF() {
         nextFirst--;
         starting_index --;
@@ -129,6 +143,9 @@ public class ArrayDeque<T> implements Deque<T> {
         items[last_index] = null;
         size = size - 1;
 
+        nextLast--;
+        sizedown();
+
         return x;
     }
 
@@ -145,6 +162,7 @@ public class ArrayDeque<T> implements Deque<T> {
         inc_nF();
         size = size - 1;
 
+        sizedown();
 
         return x;
     }
@@ -174,6 +192,50 @@ public class ArrayDeque<T> implements Deque<T> {
         return (starting_index + size - 1) % capacity;
     }
 
+
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int wizPos;
+        public ArrayDequeIterator() {
+            wizPos = 0;
+        }
+        public boolean hasNext() {
+            return wizPos < size;
+        }
+
+        public T next() {
+            T returnitem = get(wizPos);
+            wizPos += 1;
+            return returnitem;
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof ArrayDeque)) {
+            return false;
+        }
+        ArrayDeque<?> ad = (ArrayDeque<?>) o;
+        if (ad.size() != size) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (ad.get(i) != get(i)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 }
