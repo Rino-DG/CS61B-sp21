@@ -31,7 +31,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
 
     /* Constructor that creates an empty linked list */
-    LinkedListDeque() {
+    public LinkedListDeque() {
         sentinel = null;
         sentinel = new d_node();
         size = 0;
