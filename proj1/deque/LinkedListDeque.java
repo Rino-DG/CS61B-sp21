@@ -6,21 +6,14 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     public class Dnode {
 
-        private Dnode prev;
         private T item;
+        private Dnode prev;
         private Dnode next;
 
 
-        public Dnode() {
-            prev = null;
-            item = null;
-            next = null;
-        }
-
-
-        public Dnode(Dnode p, T i, Dnode n) {
-            prev = p;
+        public Dnode(T i, Dnode p, Dnode n) {
             item = i;
+            prev = p;
             next = n;
         }
 
@@ -32,8 +25,8 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     /* Constructor that creates an empty linked list */
     public LinkedListDeque() {
-        sentinel = null;
-        sentinel = new Dnode();
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
         size = 0;
     }
 
@@ -56,115 +49,70 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public void addFirst(T i) {
-        Dnode newNode = new Dnode(null, i, null);
-        if (sentinel.next == null) {
-            newNode.prev = newNode;
-            sentinel.next = newNode;
-            newNode.next = sentinel.next;
-            sentinel.prev = newNode;
-
-        } else {
-            newNode.prev = sentinel.prev;
-            sentinel.prev.next = newNode;
-            sentinel.next.prev = newNode;
-            newNode.next = sentinel.next;
-            sentinel.next = newNode;
-
-        }
+        sentinel.next = new Dnode(i, sentinel, sentinel.next);
+        sentinel.next.next.prev = sentinel.next;
         size += 1;
     }
 
     @Override
     /* Adds an item to the back of the deque */
     public void addLast(T i) {
-        if (sentinel.next == null) {
-            addFirst(i);
-        } else {
-            Dnode newNode = new Dnode(null, i, null);
-            newNode.prev = sentinel.prev;
-            sentinel.prev.next = newNode;
-            sentinel.next.prev = newNode;
-            newNode.next = sentinel.next;
-            sentinel.prev = newNode;
-            size += 1;
-        }
-
+        sentinel.prev = new Dnode(i, sentinel.prev, sentinel);
+        sentinel.prev.prev.next = sentinel.prev;
     }
 
     @Override
     public T removeFirst() {
-        Dnode byenode = new Dnode();
-        byenode.next = sentinel.next;
         if (isEmpty()) {
             return null;
-        } else if (size == 1) {
-            sentinel.next = null;
-            sentinel.prev = null;
-            size -= 1;
-        } else {
-            sentinel.next = sentinel.next.next;
-            sentinel.next.prev = sentinel.prev;
-            sentinel.prev.next = sentinel.next;
-            byenode.next.next = null;
-            byenode.next.prev = null;
-            size -= 1;
         }
-        return byenode.next.item;
+        T item = sentinel.next.item;
+        sentinel.next = sentinel.next.next;
+        sentinel.next.prev = sentinel;
+        size -= 1;
+        return item;
+
     }
 
     @Override
     public T removeLast() {
-        Dnode byenode = new Dnode();
-        byenode.next = sentinel.prev;
         if (isEmpty()) {
             return null;
-        } else {
-            sentinel.prev = sentinel.prev.prev;
-            sentinel.prev.next = sentinel.next;
-            sentinel.next.prev = sentinel.prev;
-            byenode.next.next = null;
-            byenode.next.prev = null;
-            size -= 1;
         }
-        return byenode.next.item;
+        T item = sentinel.prev.item;
+        sentinel.prev = sentinel.prev.prev;
+        sentinel.prev.next = sentinel;
+        size -= 1;
+        return item;
     }
 
     @Override
     public T get(int index) {
-        if (isEmpty()) {
+        if (index < 0 || index > size - 1) {
             return null;
-        } else if (index >= size) {
-            return null;
-        } else {
-            Dnode p = sentinel;
-            for (int i = 0; i <= index; i++) {
-                p = p.next;
-            }
-            return p.item;
         }
+        Dnode currentNode = sentinel.next;
+        for (int i = 0; i < size; i++) {
+            if (i == index) {
+                return currentNode.item;
+            }
+            currentNode = currentNode.next;
+        }
+        throw new AssertionError();
     }
-
 
     public T getRecursive(int index) {
-        Dnode p = sentinel;
-        if (isEmpty()) {
+        if (index < 0 || index > size - 1) {
             return null;
-        } else if (index >= size) {
-            return null;
-        } else if (index == 0) {
-            return p.next.item;
         }
-        p = p.next;
-        return getRecursive(index - 1, p);
+        return getRecursiveHelper(index, sentinel.next);
     }
 
-    private T getRecursive(int index, Dnode p) {
+    private T getRecursiveHelper(int index, Dnode currentNode) {
         if (index == 0) {
-            return p.next.item;
-        } else {
-            p = p.next;
-            return getRecursive(index - 1, p);
+            return currentNode.item;
         }
+        return getRecursiveHelper(index - 1, currentNode.next);
     }
 
     public Iterator<T> iterator() {
@@ -173,7 +121,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
     private class LinkedListDequeIterator implements Iterator<T> {
 
-        private Dnode wizNode = new Dnode();
+        private Dnode wizNode;
         LinkedListDequeIterator() {
             wizNode = sentinel;
         }
