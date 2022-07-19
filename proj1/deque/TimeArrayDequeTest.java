@@ -19,23 +19,22 @@ public class TimeArrayDequeTest {
     }
 
     public static void timeAListConstruction() {
-        // TODO: YOUR CODE HERE
         ArrayDeque<Integer> testresultN = new ArrayDeque<>();
         ArrayDeque<Double> testresulttime = new ArrayDeque<>();
 
-        for (int n = 1000; n <= 128000; n = n*2) {
+        for (int n = 1000; n <= 128000; n = n * 2) {
             /* Add n to the AList that will hold the number of items tested */
             testresultN.addLast(n);
 
             ArrayDeque<Integer> test = new ArrayDeque<>();
 
 
-            for(int start = 0; start <= n; start++) {
+            for (int start = 0; start <= n; start++) {
                 test.addLast(start);
             }
 
             Stopwatch sw = new Stopwatch();
-            for(int start = 0; start <= n; start++) {
+            for (int start = 0; start <= n; start++) {
                 test.size();
             }
             double TimeInSeconds = sw.elapsedTime();
