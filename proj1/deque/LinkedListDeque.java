@@ -20,7 +20,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
 
-    private Dnode sentinel;
+    private Dnode sentinel = new Dnode(null, null, null);
     private int size;
 
     /* Constructor that creates an empty linked list */
@@ -28,6 +28,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;
+    }
+
+    public LinkedListDeque(T item) {
+        sentinel.next = new Dnode(item, sentinel, sentinel);
+        sentinel.prev = sentinel.next;
     }
 
     @Override
