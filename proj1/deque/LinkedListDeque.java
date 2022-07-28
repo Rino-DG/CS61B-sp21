@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
 
-    public class Dnode {
+    private class Dnode {
 
         private T item;
         private Dnode prev;
@@ -28,11 +28,6 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;
-    }
-
-    public LinkedListDeque(T item) {
-        sentinel.next = new Dnode(item, sentinel, sentinel);
-        sentinel.prev = sentinel.next;
     }
 
     @Override
