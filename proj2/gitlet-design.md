@@ -1,6 +1,6 @@
 # Gitlet Design Document
 
-**Name**:
+**Name**: Rino De Guzman
 
 ## Classes and Data Structures
 
