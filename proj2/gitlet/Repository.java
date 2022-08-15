@@ -44,12 +44,14 @@ public class Repository {
 
             // Create the initial commit
             Commit initialCommit = new Commit();
-            File initialCommitFile = Utils.join(Commit.COMMIT_FOLDER, "initialFile");
+            File initialCommitFile = Utils.join(Commit.COMMIT_FOLDER, "initialCommit");
             Utils.writeObject(initialCommitFile, initialCommit);
 
             byte[] actualSha = Utils.readContents(initialCommitFile);
-
             String shaString = Utils.sha1((Object) actualSha);
+
+            File shaCommitFile = Utils.join(Commit.COMMIT_FOLDER, shaString);
+            initialCommitFile.renameTo(shaCommitFile);
 
         } else {
             // Prompts the user that a Repository is already initialized
