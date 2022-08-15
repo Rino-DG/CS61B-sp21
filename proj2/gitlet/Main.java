@@ -14,7 +14,7 @@ public class Main {
         switch(firstArg) {
             case "init":
                 // TODO: handle the `init` command
-                break;
+                Repository.initiate();
             case "add":
                 // TODO: handle the `add [filename]` command
                 break;
