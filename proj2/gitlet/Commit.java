@@ -25,8 +25,6 @@ public class Commit implements Serializable {
      *
      */
 
-    //Folder that the commits live in
-    static final File COMMIT_FOLDER = join(Repository.GITLET_DIR, "commits");
 
     /** The message of this Commit. */
     private String message;
@@ -58,7 +56,7 @@ public class Commit implements Serializable {
     public void SaveCommit(Commit commit) {
 
         // Create the file object so that it is able to be hashed
-        File commitFile = Utils.join(Commit.COMMIT_FOLDER, "acommit");
+        File commitFile = Utils.join(Repository.OBJECT_DIR, "acommit");
         // Write the commit object to the file
         Utils.writeObject(commitFile, commit);
 
@@ -66,7 +64,7 @@ public class Commit implements Serializable {
         String shaString = HashObject.returnHash(commitFile);
 
         // Rename "acommit" to the actual Sha-1 hash
-        File shaCommitFile = Utils.join(Commit.COMMIT_FOLDER, shaString);
+        File shaCommitFile = Utils.join(Repository.OBJECT_DIR, shaString);
         commitFile.renameTo(shaCommitFile);
     }
 

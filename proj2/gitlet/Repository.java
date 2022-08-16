@@ -28,6 +28,9 @@ public class Repository {
     /** The .gitlet directory. */
     public static final File GITLET_DIR = join(CWD, ".gitlet");
 
+    /** The object directory, that will contain all the objects for the program **/
+    public static final File OBJECT_DIR = join(GITLET_DIR, "objects");
+
     /* TODO: fill in the rest of this class. */
 
     public static void initiate() {
@@ -38,11 +41,10 @@ public class Repository {
             // Create the .gitlet directory
             GITLET_DIR.mkdir();
             // Create the commits folder within the .gitlet directory
-            Commit.COMMIT_FOLDER.mkdir();
+            OBJECT_DIR.mkdir();
             // Create the staging area
             StagingArea.SetTheStage();
 
-            // TODO: Figure out a way to make this more simple, maybe put in a separate class or create helper method
             // TODO: How will I make sure the code is not redundant?
             // TODO: Change how the repository organizes the .gitlet files
             /** For example: **/
