@@ -46,7 +46,8 @@ other necessary features of the gitlet program.
 Commits will be stored in a binary search tree map structure from java.util, the initial commit will start off
 as the root of the tree. This allows the access of commits to be o-log(n).
 The keys will be the sha-1 hash of each commit and the value will be the object of the commit
-itself. Since deletion is not a concern for the commit tree, we will not need to worry about that.
+itself. Since deletion is not a concern for the commit tree, we will not need to worry about that. Or should we use
+a hash map?
 
 #### Fields
 1. Commit Message (String)
@@ -78,6 +79,8 @@ a new object
 ## Branch
 Have each branch into separate folders. Master is within its own folder ?
 
-### ShaHasher
-Will use program from Geeksforgeeks.org that implements the Sha-1 hash in Java, but instead of 
-providing a string as a parameter, it will provide an object
+### HashObject
+Use Utils class provided with the skeleton to create a separate class for hashing objects. This will
+prevent redundancy and can hash any object created in the project.
+
+

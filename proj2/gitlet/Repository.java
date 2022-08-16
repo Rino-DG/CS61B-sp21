@@ -42,6 +42,10 @@ public class Repository {
             // Create the staging area
             StagingArea.SetTheStage();
 
+            // TODO: Figure out a way to make this more simple, maybe put in a separate class or create helper method
+            // TODO: How will I make sure the code is not redundant?
+            // TODO: Change how the repository organizes the .gitlet files
+            /** For example: **/
             // Create the initial commit
             Commit initialCommit = new Commit();
             File initialCommitFile = Utils.join(Commit.COMMIT_FOLDER, "initialCommit");

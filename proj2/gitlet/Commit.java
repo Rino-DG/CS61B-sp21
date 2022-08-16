@@ -45,6 +45,16 @@ public class Commit implements Serializable {
         this.parent = null;
     }
 
+    public Commit(String message, Date timestamp, String parent) {
+        this.message = message;
+        this.timestamp = timestamp;
+        this.parent = parent;
+    }
+
+    public void SaveCommit(Commit commit) {
+        Commit newCommit = new Commit();
+    }
+
     /** TODO: Accommodate the failure case
      * TODO: */
 }
