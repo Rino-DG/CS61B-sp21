@@ -31,6 +31,8 @@ public class Repository {
     /** The object directory, that will contain all the objects for the program **/
     public static final File OBJECT_DIR = join(GITLET_DIR, "objects");
 
+    /** The refs directory, that will contain all the refs for the branches. **/
+    public static final File REFS_DIR = join(GITLET_DIR, "refs", "heads");
     /* TODO: fill in the rest of this class. */
 
     public static void initiate() {

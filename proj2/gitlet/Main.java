@@ -15,6 +15,10 @@ public class Main {
             case "init":
                 // TODO: handle the `init` command
                 Repository.initiate();
+                // Initiate the branch
+
+                // Initiate the HEAD pointer
+
             case "add":
                 // TODO: handle the `add [filename]` command
                 break;
