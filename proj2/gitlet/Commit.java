@@ -39,20 +39,35 @@ public class Commit implements Serializable {
     /** The references of the blobs it is connected to **/
     private String blob;
 
+    // Constructor that represents the initial commit
     public Commit() {
+
         this.message = "initial commit";
         this.timestamp = new Date(0);
         this.parent = null;
     }
 
+    // Overloaded constructor that will represent all commits past the initial commit
     public Commit(String message, Date timestamp, String parent) {
+
         this.message = message;
         this.timestamp = timestamp;
         this.parent = parent;
     }
 
     public void SaveCommit(Commit commit) {
-        Commit newCommit = new Commit();
+
+        // Create the file object so that it is able to be hashed
+        File commitFile = Utils.join(Commit.COMMIT_FOLDER, "acommit");
+        // Write the commit object to the file
+        Utils.writeObject(commitFile, commit);
+
+        // Get the Sha-1 hash of the commit by passing in the file
+        String shaString = HashObject.returnHash(commitFile);
+
+        // Rename "acommit" to the actual Sha-1 hash
+        File shaCommitFile = Utils.join(Commit.COMMIT_FOLDER, shaString);
+        commitFile.renameTo(shaCommitFile);
     }
 
     /** TODO: Accommodate the failure case

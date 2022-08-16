@@ -46,16 +46,11 @@ public class Repository {
             // TODO: How will I make sure the code is not redundant?
             // TODO: Change how the repository organizes the .gitlet files
             /** For example: **/
+
             // Create the initial commit
             Commit initialCommit = new Commit();
-            File initialCommitFile = Utils.join(Commit.COMMIT_FOLDER, "initialCommit");
-            Utils.writeObject(initialCommitFile, initialCommit);
-
-            byte[] actualSha = Utils.readContents(initialCommitFile);
-            String shaString = Utils.sha1((Object) actualSha);
-
-            File shaCommitFile = Utils.join(Commit.COMMIT_FOLDER, shaString);
-            initialCommitFile.renameTo(shaCommitFile);
+            // Save the initial commit
+            initialCommit.SaveCommit(initialCommit);
 
         } else {
             // Prompts the user that a Repository is already initialized
