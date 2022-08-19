@@ -52,7 +52,6 @@ public class Repository {
             /** For example: **/
 
 
-
         } else {
             // Prompts the user that a Repository is already initialized
             System.out.println(RepoExists());

@@ -19,6 +19,10 @@ public class Main {
 
                 // Initiate the HEAD pointer
 
+                // Create the initial commit
+                Commit initCommit = new Commit();
+                Repository.makeCommit(initCommit);
+
             case "add":
                 // TODO: handle the `add [filename]` command
                 break;
