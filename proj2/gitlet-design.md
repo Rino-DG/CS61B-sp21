@@ -34,6 +34,13 @@ After that,
 2. Field 2
 
 
+TODO: 
+- Implement the helper methods that help guarantee persistence first.
+   - A lot of loading & saving you’ll be doing are similar to operations you did in lab 12 (Capers)
+
+
+
+
 ### Init Command
 **What is the best way to structure the .gitlet file?**
 >Separate files for commits, blobs, staging area, cwd (current working directory)

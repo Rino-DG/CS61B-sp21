@@ -46,20 +46,12 @@ public class Repository {
             OBJECT_DIR.mkdir();
             // Create the refs directory
             REFS_DIR.mkdirs();
-            // Create the staging area
-            StagingArea.SetTheStage();
 
             // TODO: How will I make sure the code is not redundant?
             // TODO: Change how the repository organizes the .gitlet files
             /** For example: **/
 
-            // Create the initial commit
-            Commit initialCommit = new Commit();
-            // Save the initial commit
-            initialCommit.SaveCommit(initialCommit);
 
-            // Create the master branch
-            Branch.initiateBranch(initialCommit);
 
         } else {
             // Prompts the user that a Repository is already initialized
@@ -72,5 +64,11 @@ public class Repository {
         return "A Gitlet version-control system already exists in the current directory.";
     }
 
+    /**
+     * Creates and persistently saves a commit
+     */
+    public static void makeCommit(Commit commit) {
+        commit.SaveCommit();
+    }
 
 }
