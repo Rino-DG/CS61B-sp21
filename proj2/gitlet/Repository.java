@@ -44,6 +44,8 @@ public class Repository {
             GITLET_DIR.mkdir();
             // Create the commits folder within the .gitlet directory
             OBJECT_DIR.mkdir();
+            // Create the refs directory
+            REFS_DIR.mkdirs();
             // Create the staging area
             StagingArea.SetTheStage();
 
@@ -55,6 +57,9 @@ public class Repository {
             Commit initialCommit = new Commit();
             // Save the initial commit
             initialCommit.SaveCommit(initialCommit);
+
+            // Create the master branch
+            Branch.initiateBranch(initialCommit);
 
         } else {
             // Prompts the user that a Repository is already initialized
