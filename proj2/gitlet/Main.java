@@ -15,13 +15,10 @@ public class Main {
             case "init":
                 // TODO: handle the `init` command
                 Repository.initiate();
-                // Initiate the branch
 
-                // Initiate the HEAD pointer
 
-                // Create the initial commit
-                Commit initCommit = new Commit();
-                Repository.makeCommit(initCommit);
+
+
 
             case "add":
                 // TODO: handle the `add [filename]` command

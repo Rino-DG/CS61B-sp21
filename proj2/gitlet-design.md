@@ -84,7 +84,7 @@ a new object
 
 
 ## Branch
-Have each branch into separate folders. Master is within its own folder ?
+The branch will contain a reference to a commit represented as a SHA-1 Hash in String format.
 
 ### HashObject
 Use Utils class provided with the skeleton to create a separate class for hashing objects. This will

@@ -33,7 +33,15 @@ public class Repository {
 
     /** The refs directory, that will contain all the refs for the branches. **/
     public static final File REFS_DIR = join(GITLET_DIR, "refs", "heads");
-    /* TODO: fill in the rest of this class. */
+
+    public static final String HEAD_PREFIX = "ref: refs/heads/";
+
+    public static final File HEAD = join(GITLET_DIR, "HEAD");
+
+    public static final String DEFAULT_BRANCH = "master";
+
+    public static final File MASTER = join(REFS_DIR, "master");
+
 
     public static void initiate() {
 
@@ -49,8 +57,15 @@ public class Repository {
 
             // TODO: How will I make sure the code is not redundant?
             // TODO: Change how the repository organizes the .gitlet files
-            /** For example: **/
 
+            // Create the initial commit
+            Commit initCommit = new Commit();
+            Repository.makeCommit(initCommit);
+
+            // Initiate the branch
+            setBranchTo(DEFAULT_BRANCH);
+            // Initiate the HEAD pointer
+            setBranchHead(initCommit.getSelfHashId());
 
         } else {
             // Prompts the user that a Repository is already initialized
@@ -68,6 +83,17 @@ public class Repository {
      */
     public static void makeCommit(Commit commit) {
         commit.SaveCommit();
+    }
+
+    /**
+     * Creates default master branch2
+     */
+    public static void setBranchTo(String branchName) {
+        writeContents(HEAD, HEAD_PREFIX + branchName);
+    }
+
+    public static void setBranchHead(String commitHash) {
+        writeContents(MASTER, commitHash);
     }
 
 }

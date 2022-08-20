@@ -4,9 +4,11 @@ package gitlet;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static gitlet.Utils.join;
+import static gitlet.Utils.sha1;
 
 /** Represents a gitlet commit object.
  *  TODO: It's a good idea to give a description here of what else this Class
@@ -31,9 +33,9 @@ public class Commit implements Serializable {
     /** The timestamp of this Commit. **/
     private Date timestamp;
     /** The SHA-1 hexadecimal of the PARENT commit **/
-    private String parent;
+    private ArrayList<String> parent;
     /** The hash of the commit itself **/
-    private String selfHash;
+    private String selfHashId;
     /** The references of the blobs it is connected to **/
     private String blob;
 
@@ -42,15 +44,18 @@ public class Commit implements Serializable {
 
         this.message = "initial commit";
         this.timestamp = new Date(0);
-        this.parent = null;
+        this.parent = new ArrayList<>();
+        this.selfHashId = createHashId();
     }
 
     // Overloaded constructor that will represent all commits past the initial commit
-    public Commit(String message, Date timestamp, String parent) {
+    public Commit(String message, Date timestamp, ArrayList<String> parent) {
 
         this.message = message;
         this.timestamp = timestamp;
         this.parent = parent;
+        this.selfHashId = createHashId();
+
     }
 
     /**
@@ -61,19 +66,22 @@ public class Commit implements Serializable {
 
         Commit newCommit = new Commit(this.message, this.timestamp, this.parent);
 
-        // Create the file object so that it is able to be hashed
-        File commitFile = Utils.join(Repository.OBJECT_DIR, "acommit");
-        // Write the commit object to the file
-        Utils.writeObject(commitFile, newCommit);
-
-        // Get the Sha-1 hash of the commit by passing in the file
-        String shaString = HashObject.returnHash(commitFile);
+        String commitHash = newCommit.getSelfHashId();
 
         // Rename "acommit" to the actual Sha-1 hash
-        File shaCommitFile = Utils.join(Repository.OBJECT_DIR, shaString);
-        commitFile.renameTo(shaCommitFile);
+        File newCommitFile = Utils.join(Repository.OBJECT_DIR, commitHash);
+        Utils.writeObject(newCommitFile, newCommit);
+
     }
 
-    /** TODO: Accommodate the failure case
-     * TODO: */
+    public String getSelfHashId() {
+        return selfHashId;
+    }
+
+
+
+    private String createHashId() {
+        return sha1(message, parent.toString());
+    }
+
 }
