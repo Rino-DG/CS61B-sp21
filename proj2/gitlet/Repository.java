@@ -25,6 +25,7 @@ public class Repository {
 
     /** The current working directory. */
     public static final File CWD = new File(System.getProperty("user.dir"));
+
     /** The .gitlet directory. */
     public static final File GITLET_DIR = join(CWD, ".gitlet");
 
@@ -34,15 +35,23 @@ public class Repository {
     /** The refs directory, that will contain all the refs for the branches. **/
     public static final File REFS_DIR = join(GITLET_DIR, "refs", "heads");
 
+    /** The template for creating the reference to the head **/
     public static final String HEAD_PREFIX = "ref: refs/heads/";
 
+    /** The HEAD file, which contains the ref path for the head **/
     public static final File HEAD = join(GITLET_DIR, "HEAD");
 
+    /** The default name for the initial branch **/
     public static final String DEFAULT_BRANCH = "master";
 
+    /** The file that will contain the HEAD commit **/
     public static final File MASTER = join(REFS_DIR, "master");
 
 
+    /**
+     * This method creates all the directories needed for gitlet to operate. It also makes the initial commit,
+     * initiates the master branch, and sets up the HEAD pointer.
+     */
     public static void initiate() {
 
         // If the .gitlet directory does not exist, it will create the directories needed for the program
@@ -55,17 +64,17 @@ public class Repository {
             // Create the refs directory
             REFS_DIR.mkdirs();
 
-            // TODO: How will I make sure the code is not redundant?
-            // TODO: Change how the repository organizes the .gitlet files
 
             // Create the initial commit
             Commit initCommit = new Commit();
-            Repository.makeCommit(initCommit);
+            // Saves the commit through serialization
+            initCommit.SaveCommit();
 
             // Initiate the branch
             setBranchTo(DEFAULT_BRANCH);
+
             // Initiate the HEAD pointer
-            setBranchHead(initCommit.getSelfHashId());
+            setHeadTo(initCommit.getSelfHashId());
 
         } else {
             // Prompts the user that a Repository is already initialized
@@ -79,20 +88,17 @@ public class Repository {
     }
 
     /**
-     * Creates and persistently saves a commit
-     */
-    public static void makeCommit(Commit commit) {
-        commit.SaveCommit();
-    }
-
-    /**
      * Creates default master branch2
      */
     public static void setBranchTo(String branchName) {
         writeContents(HEAD, HEAD_PREFIX + branchName);
     }
 
-    public static void setBranchHead(String commitHash) {
+    /**
+     * Helper method that writes the reference of a commit to the MASTER branch
+     * @param commitHash
+     */
+    public static void setHeadTo(String commitHash) {
         writeContents(MASTER, commitHash);
     }
 

@@ -4,6 +4,7 @@ package gitlet;
 
 import java.io.File;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -58,6 +59,24 @@ public class Commit implements Serializable {
 
     }
 
+    public String createHashId() {
+        return sha1(message, this.dateToString(), parent.toString());
+    }
+
+    /**
+     * Helper method that returns a string representation of the Date object. Will be using the code from
+     * url: "https://www.javatpoint.com/java-date-to-string" to help format the date.
+     * Should be formatted like: "Date: Thu Nov 9 17:01:33 2017 -0800"
+     * @return
+     */
+    public String dateToString() {
+        // Initialize SimpleDateFormat object
+        SimpleDateFormat formatDate = new SimpleDateFormat("E MMM dd HH:mm:ss Z");
+        // Return the formatted date as a string
+        return formatDate.format(timestamp);
+    }
+
+
     /**
      * Saves a commit by writing the commit to a File object then creating a sha-1
      * by passing in the file. Lastly, it will rename the file to the sha-1 hash.
@@ -78,10 +97,5 @@ public class Commit implements Serializable {
         return selfHashId;
     }
 
-
-
-    private String createHashId() {
-        return sha1(message, parent.toString());
-    }
 
 }
