@@ -28,7 +28,8 @@ public class Main {
                      * stored in .gitlet. This connection/mapping will be stored in a tree.
                      *
                      */
-                    Blob.Create(fileName);
+                    Blob newBlob = new Blob();
+                    newBlob.Create(fileName);
                     //StagingArea.Add(fileName);
                 } else {
                     GitletMessage.NotGitDir();
