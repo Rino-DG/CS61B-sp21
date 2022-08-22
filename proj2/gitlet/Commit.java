@@ -83,13 +83,13 @@ public class Commit implements Serializable {
      */
     public void SaveCommit() {
 
-        Commit newCommit = new Commit(this.message, this.timestamp, this.parent);
+        //Commit newCommit = new Commit(this.message, this.timestamp, this.parent);
 
-        String commitHash = newCommit.getSelfHashId();
+        String commitHash = this.getSelfHashId();
 
-        // Rename "acommit" to the actual Sha-1 hash
+        // Write the commit object to a file with a file name as the commit's Sha-1 Hash.
         File newCommitFile = Utils.join(Repository.OBJECT_DIR, commitHash);
-        Utils.writeObject(newCommitFile, newCommit);
+        Utils.writeObject(newCommitFile, this);
 
     }
 

@@ -29,10 +29,6 @@ After that,
 10. branch
 11. rm-branch
 
-#### Fields
-1. Field 1
-2. Field 2
-
 
 TODO: 
 - Implement the helper methods that help guarantee persistence first.
@@ -47,6 +43,37 @@ TODO:
 The init command will check if there is a repository already initiated. If not, it will initiate a repository
 by creating a hidden directory named ".gitlet" this houses all the staging directory, repository, blobs, and
 other necessary features of the gitlet program. 
+> 2 directories: objects and refs. The "objects" directory contains all the objects created and 
+> used for the program to run. The "refs" directory contains all the heads saved for each branch
+
+#### Fields
+1. ...mkdir() ~ Creates all the directories needed such as .gitlet, objects, and refs
+2. (*your chosen commit*).SaveCommit() ~ Saves a commit by writing the object to a file named as the commit's SHA-1 hash
+3. setBranchTo(*Branch Name*) ~ In this case, it sets the branch to a default branch named "master"
+4. setHeadTo(*Commit Hash*) ~ Set's the head to a specific commit given the sha-1 hash as a parameter
+
+
+### Add 
+
+
+
+### Staging Area
+- What data structures should be used for the staging area?
+- How will it interact with blobs?
+- What commands interact with the staging area?
+- Add, Commit, Checkout, and reset
+  - Add
+    - Adds a copy of the file as it currently exists to the staging area
+    - Staging an already-staged file overwrites the previous entry in the staging area with the new contents.
+    - If the current working version of the file is identical to the version in the current commit, do not stage it to be added...
+    - and remove it from the staging area if it is already there (as can happen when a file is changed, added, and then changed back to it’s original version).
+  - Commit
+    - A snapshot of the staging area is saved when there is a commit
+    - The staging area is cleared after a commit
+
+
+### Blobs
+- It will store 2 things, the self hash, and the content of the file
 
 
 ### Commit Command (implements serializable)

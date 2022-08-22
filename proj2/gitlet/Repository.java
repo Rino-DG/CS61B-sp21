@@ -1,6 +1,7 @@
 package gitlet;
 
 import java.io.File;
+
 import static gitlet.Utils.*;
 
 // TODO: any imports you need here
@@ -78,28 +79,36 @@ public class Repository {
 
         } else {
             // Prompts the user that a Repository is already initialized
-            System.out.println(RepoExists());
+            System.out.println(GitletMessage.RepoExists());
         }
     }
 
-    // Private class that returns a string stating that a repo already exists.
-    private static String RepoExists() {
-        return "A Gitlet version-control system already exists in the current directory.";
-    }
+
 
     /**
-     * Creates default master branch2
+     * Creates default master branch
      */
     public static void setBranchTo(String branchName) {
         writeContents(HEAD, HEAD_PREFIX + branchName);
     }
 
+
     /**
-     * Helper method that writes the reference of a commit to the MASTER branch
+     * Helper method that writes the reference of a commit to the MASTER branch.
+     * The HEAD is a special pointer to the latest commit! It moves automatically and is always on the current,
+     * active branch, whether that be master or another branch that the user has created.
      * @param commitHash
      */
     public static void setHeadTo(String commitHash) {
         writeContents(MASTER, commitHash);
+    }
+
+    /**
+     * Boolean method that returns whether or not a gitlet directory is initialized.
+     * @return
+     */
+    public static boolean VerifiedCwd() {
+        return GITLET_DIR.exists() && REFS_DIR.exists();
     }
 
 }
