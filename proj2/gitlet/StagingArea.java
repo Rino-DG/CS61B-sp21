@@ -18,7 +18,6 @@ public class StagingArea implements Serializable {
 
     // Method that adds a file to the Staging Area
     public static void Add(String fileName) {
-
     }
 
 }
