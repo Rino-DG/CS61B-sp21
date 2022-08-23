@@ -1,5 +1,6 @@
 package gitlet;
 
+import java.io.File;
 import java.io.Serializable;
 
 public class StagingArea implements Serializable {
@@ -16,8 +17,12 @@ public class StagingArea implements Serializable {
      * @param fileName
      */
 
-    // Method that adds a file to the Staging Area
-    public static void Add(String fileName) {
+    /**
+     * Method that adds a file to the Staging Area this will interact with the tree object to connect the file in
+     * the current working directory to the corresponding blob in the object directory.
+      */
+
+    public static void stageAdd(File file) {
     }
 
 }

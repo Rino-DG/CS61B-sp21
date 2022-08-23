@@ -92,9 +92,13 @@ public class Repository {
              * stored in .gitlet. This connection/mapping will be stored in a tree.
              *
              */
+            // Create a new blob object
             Blob newBlob = new Blob();
+            // Serialize the blob object into the objects directory
             newBlob.Create(fileName);
-            //StagingArea.Add(fileName);
+            // Add that object into the staging area by giving the url
+            StagingArea.stageAdd(newBlob.getSelfUrl());
+
         } else {
             GitletMessage.NotGitDir();
         }
