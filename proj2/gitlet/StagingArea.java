@@ -6,6 +6,9 @@ import java.io.Serializable;
 public class StagingArea implements Serializable {
     // Use HashMap or TreeMap?
 
+    // Initiate HashMap
+
+
     /**
      * We need to easily be able to remove and add objects/values from this data structure, we also need to easily look
      * up commits by their sha-1 ID.
@@ -22,6 +25,11 @@ public class StagingArea implements Serializable {
      * the current working directory to the corresponding blob in the object directory. The FILENAME of the file
      * is stored in the TREE
       */
+
+    /**
+     * Create the index file
+     * @param file
+     */
 
     public static void stageAdd(File file) {
     }

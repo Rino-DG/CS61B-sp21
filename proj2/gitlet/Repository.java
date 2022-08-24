@@ -48,6 +48,9 @@ public class Repository {
     /** The file that will contain the HEAD commit **/
     public static final File MASTER = join(REFS_DIR, "master");
 
+    /** The file that will act as the staging area... AKA index **/
+    public static final File INDEX = join(GITLET_DIR, "index");
+
 
     /**
      * This method creates all the directories needed for gitlet to operate. It also makes the initial commit,
@@ -96,6 +99,11 @@ public class Repository {
             Blob newBlob = new Blob();
             // Serialize the blob object into the objects directory
             newBlob.Create(fileName);
+            // Create the index file only if it does not exist.
+            if (INDEX.createNewFile()) {
+
+            }
+
             // Add that object into the staging area by giving the url
             StagingArea.stageAdd(newBlob.getSelfUrl());
 
