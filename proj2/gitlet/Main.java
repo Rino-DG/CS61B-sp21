@@ -24,6 +24,12 @@ public class Main {
 
                 break;
             // TODO: FILL THE REST IN
+            /**
+             * The commit command will look at the head to retrieve the latest commit!!
+             * It uses the HEAD reference/pointer to be able to chain the next commit, the next commit's
+             * parent will be the HEAD. After that, the HEAD will change its pointer to the next commit.
+             *
+             */
         }
     }
 }

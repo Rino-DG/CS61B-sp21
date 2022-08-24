@@ -19,7 +19,8 @@ public class StagingArea implements Serializable {
 
     /**
      * Method that adds a file to the Staging Area this will interact with the tree object to connect the file in
-     * the current working directory to the corresponding blob in the object directory.
+     * the current working directory to the corresponding blob in the object directory. The FILENAME of the file
+     * is stored in the TREE
       */
 
     public static void stageAdd(File file) {
