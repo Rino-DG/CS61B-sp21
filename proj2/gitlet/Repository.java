@@ -1,6 +1,7 @@
 package gitlet;
 
 import java.io.File;
+import java.io.IOException;
 
 import static gitlet.Utils.*;
 
@@ -86,7 +87,7 @@ public class Repository {
         }
     }
 
-    public static void add(String fileName) {
+    public static void add(String fileName) throws IOException {
         if (VerifiedCwd()) {
             /**
              * First, a blob will be created that stores the contents of the file that is being added.
@@ -99,13 +100,18 @@ public class Repository {
             Blob newBlob = new Blob();
             // Serialize the blob object into the objects directory
             newBlob.Create(fileName);
-            // Create the index file only if it does not exist.
+            // If the index file does not exist, create the index file and begin the instantiation of the HashMap
             if (INDEX.createNewFile()) {
+                StagingArea.initiate();
+                /**
+                 * If the index file already exists, read in the object within the file so that it can be modified
+                 */
+            } else {
 
             }
 
             // Add that object into the staging area by giving the url
-            StagingArea.stageAdd(newBlob.getSelfUrl());
+            StagingArea.addToStage(newBlob.getSelfUrl());
 
         } else {
             GitletMessage.NotGitDir();
