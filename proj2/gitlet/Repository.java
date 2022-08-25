@@ -130,12 +130,12 @@ public class Repository {
                 storedStage.save();
             } else {
                 // Returns a gitlet message stating that the file does not exists
-                GitletMessage.Dne();
+                System.out.println(GitletMessage.Dne());
             }
 
         } else {
             // Returns a gitlet message stating that the user is not in an initialized git repository
-            GitletMessage.NotGitDir();
+            System.out.println(GitletMessage.NotGitDir());
         }
     }
 
