@@ -2,6 +2,7 @@ package gitlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import static gitlet.Utils.*;
 
@@ -121,7 +122,7 @@ public class Repository {
                      * If the index file already exists, read in the object within the file so that it can be modified
                      */
                 } else {
-                    storedStage = (StagingArea) objectFromFile(INDEX);
+                    //storedStage = (StagingArea) objectFromFile(INDEX);
                 }
 
                 // Add that object into the staging area by giving the url of the CWD file and corresponding blob hash
@@ -174,10 +175,6 @@ public class Repository {
         return importFile.exists();
     }
 
-    public static Object objectFromFile(File file) {
-        Object storedObject;
-        storedObject = readObject(file, Object.class);
-        return storedObject;
-    }
+
 
 }

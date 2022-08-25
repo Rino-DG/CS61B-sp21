@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 
+import static gitlet.Utils.readObject;
+
 public class StagingArea implements Serializable {
     // Use HashMap or TreeMap?
 
@@ -51,5 +53,7 @@ public class StagingArea implements Serializable {
         stagedAdd = new HashMap<>();
         stagedRem = new HashMap<>();
     }
+
+
 
 }
