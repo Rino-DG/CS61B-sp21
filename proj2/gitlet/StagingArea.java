@@ -8,8 +8,13 @@ public class StagingArea implements Serializable {
     // Use HashMap or TreeMap?
 
     // Initiate HashMap for addition and removal
-    private static HashMap<File, String> stagedAdd;
-    private static HashMap<File, String> stagedRem;
+    private HashMap<File, String> stagedAdd;
+    private HashMap<File, String> stagedRem;
+
+    public StagingArea() {
+        this.stagedAdd = null;
+        this.stagedRem = null;
+    }
 
 
     /**
@@ -31,13 +36,18 @@ public class StagingArea implements Serializable {
 
     /**
      * Create the index file
-     * @param file
+     * @param cwdFile blobSha
      */
 
-    public static void addToStage(File file) {
+    public void addToStage(File cwdFile, String blobSha) {
+        stagedAdd.put(cwdFile, blobSha);
     }
 
-    public static void initiate() {
+    public void save() {
+        Utils.writeObject(Repository.INDEX, this);
+    }
+
+    public void initiate() {
         stagedAdd = new HashMap<>();
         stagedRem = new HashMap<>();
     }

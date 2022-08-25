@@ -1,5 +1,7 @@
 package gitlet;
 
+import java.io.IOException;
+
 /** Driver class for Gitlet, a subset of the Git version-control system.
  *  @author TODO
  */
@@ -8,7 +10,7 @@ public class Main {
     /** Usage: java gitlet.Main ARGS, where ARGS contains
      *  <COMMAND> <OPERAND1> <OPERAND2> ... 
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO: what if args is empty?
 
         String firstArg = args[0];
@@ -19,7 +21,8 @@ public class Main {
             case "add":
                 // TODO: handle the `add [filename]` command
                 String fileName = args[1];
-                // First check if the user is in a valid working directory
+                // First check if the file exists
+                    // If not print an error message and exit without changing anything
                 Repository.add(fileName);
 
                 break;

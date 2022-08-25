@@ -87,33 +87,53 @@ public class Repository {
         }
     }
 
-    public static void add(String fileName) throws IOException {
-        if (VerifiedCwd()) {
-            /**
-             * First, a blob will be created that stores the contents of the file that is being added.
-             * The name of the blob will be the sha-1 hash that is computed via the contents of the file.
-             * Second, the staging area will then connect the file from the working directory to the blob
-             * stored in .gitlet. This connection/mapping will be stored in a tree.
-             *
-             */
-            // Create a new blob object
-            Blob newBlob = new Blob();
-            // Serialize the blob object into the objects directory
-            newBlob.Create(fileName);
-            // If the index file does not exist, create the index file and begin the instantiation of the HashMap
-            if (INDEX.createNewFile()) {
-                StagingArea.initiate();
-                /**
-                 * If the index file already exists, read in the object within the file so that it can be modified
-                 */
-            } else {
+    // TODO: Failure case for if the file does not exist!
 
+    public static void add(String fileName) throws IOException {
+        // Create url for filename given
+        File addFile = Utils.join(CWD, fileName);
+
+        /**
+         * If the user is indeed in an initialized repo and the file that the user is trying to add
+         * exists, proceed to add the file to the staging area.
+         */
+        if (verifiedCwd()) {
+            if (fileExists(addFile)) {
+                /**
+                 * First, a blob will be created that stores the contents of the file that is being added.
+                 * The name of the blob will be the sha-1 hash that is computed via the contents of the file.
+                 * Second, the staging area will then connect the file from the working directory to the blob
+                 * stored in .gitlet. This connection/mapping will be stored in a tree.
+                 *
+                 */
+
+
+                // Create a new blob object
+                Blob newBlob = new Blob();
+                // Serialize the blob object into the objects directory by passing in the File.
+                newBlob.save(addFile);
+
+                // If the index file does not exist, create the index file and begin the instantiation of the HashMap
+                StagingArea storedStage = new StagingArea();
+                if (INDEX.createNewFile()) {
+                    storedStage.initiate();
+                    /**
+                     * If the index file already exists, read in the object within the file so that it can be modified
+                     */
+                } else {
+                    storedStage = (StagingArea) objectFromFile(INDEX);
+                }
+
+                // Add that object into the staging area by giving the url of the CWD file and corresponding blob hash
+                storedStage.addToStage(addFile, newBlob.getSelfHashId());
+                storedStage.save();
+            } else {
+                // Returns a gitlet message stating that the file does not exists
+                GitletMessage.Dne();
             }
 
-            // Add that object into the staging area by giving the url
-            StagingArea.addToStage(newBlob.getSelfUrl());
-
         } else {
+            // Returns a gitlet message stating that the user is not in an initialized git repository
             GitletMessage.NotGitDir();
         }
     }
@@ -140,8 +160,24 @@ public class Repository {
      * Boolean method that returns whether or not a gitlet directory is initialized.
      * @return
      */
-    public static boolean VerifiedCwd() {
+    public static boolean verifiedCwd() {
         return GITLET_DIR.exists() && REFS_DIR.exists();
+    }
+
+    /**
+     * Boolean method that returns wether or not a file exists given the File path that
+     * it SHOULD exist in.
+     * @param importFile
+     * @return
+     */
+    public static boolean fileExists(File importFile) {
+        return importFile.exists();
+    }
+
+    public static Object objectFromFile(File file) {
+        Object storedObject;
+        storedObject = readObject(file, Object.class);
+        return storedObject;
     }
 
 }

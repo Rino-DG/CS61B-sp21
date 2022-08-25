@@ -19,11 +19,9 @@ public class Blob implements Serializable {
     /**
      * Retrieves the file from the CWD, imports the contents of that file to a blob,
      * whilst also calculating a sha-1 hash, then creates a blob object
-     * @param fileName
+     * @param importFile
      */
-    public void Create(String fileName) {
-        // Get the file url
-        File importFile = Utils.join(Repository.CWD, fileName);
+    public void save(File importFile) {
         // Get the contents of the file represented as bytes.
         content = Utils.readContents(importFile);
 
@@ -31,7 +29,7 @@ public class Blob implements Serializable {
         selfHashId = Utils.sha1((Object) content);
 
         // Write the blob object to the objects directory
-        File selfUrl = Utils.join(Repository.OBJECT_DIR, selfHashId);
+        selfUrl = Utils.join(Repository.OBJECT_DIR, selfHashId);
         Utils.writeObject(selfUrl, this);
 
     }
@@ -40,7 +38,7 @@ public class Blob implements Serializable {
         return selfHashId;
     }
 
-    public File getSelfUrl() {
+    public File getUrl() {
         return selfUrl;
     }
 
