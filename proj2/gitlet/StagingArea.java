@@ -54,6 +54,13 @@ public class StagingArea implements Serializable {
         stagedRem = new HashMap<>();
     }
 
+    // Returns the stored staging area object from the index file
+    public static StagingArea fromFile(File stageFile) {
+        StagingArea storedStage;
+        storedStage = readObject(stageFile, StagingArea.class);
+        return storedStage;
+    }
+
 
 
 }

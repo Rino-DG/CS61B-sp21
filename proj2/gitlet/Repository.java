@@ -122,7 +122,7 @@ public class Repository {
                      * If the index file already exists, read in the object within the file so that it can be modified
                      */
                 } else {
-                    //storedStage = (StagingArea) objectFromFile(INDEX);
+                    storedStage = StagingArea.fromFile(INDEX);
                 }
 
                 // Add that object into the staging area by giving the url of the CWD file and corresponding blob hash
@@ -138,6 +138,8 @@ public class Repository {
             GitletMessage.NotGitDir();
         }
     }
+
+
 
     /**
      * Creates default master branch
