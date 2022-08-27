@@ -84,11 +84,14 @@ public class Repository {
 
         } else {
             // Prompts the user that a Repository is already initialized
-            System.out.println(GitletMessage.RepoExists());
+            System.out.println(GitletMessage.repoExists());
         }
     }
 
-    // TODO: Failure case for if the file does not exist!
+    /**
+     *   TODO: If the current working verison of the file is identical to the version in the current commit, do
+     *   not stage it to be added, and remove it from the staging area if it is already there.
+      */
 
     public static void add(String fileName) throws IOException {
         // Create url for filename given
@@ -130,12 +133,12 @@ public class Repository {
                 storedStage.save();
             } else {
                 // Returns a gitlet message stating that the file does not exists
-                System.out.println(GitletMessage.Dne());
+                System.out.println(GitletMessage.dne());
             }
 
         } else {
             // Returns a gitlet message stating that the user is not in an initialized git repository
-            System.out.println(GitletMessage.NotGitDir());
+            System.out.println(GitletMessage.notGitDir());
         }
     }
 

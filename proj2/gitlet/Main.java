@@ -20,12 +20,15 @@ public class Main {
 
             case "add":
                 // TODO: handle the `add [filename]` command
-                String fileName = args[1];
-                // First check if the file exists
+                if (args.length > 1) {
+                    String fileName = args[1];
+                    // First check if the file exists
                     // If not print an error message and exit without changing anything
-                Repository.add(fileName);
-
+                    Repository.add(fileName);
+                }
                 break;
+            default:
+                System.out.println(GitletMessage.cmdDne());
             // TODO: FILL THE REST IN
             /**
              * The commit command will look at the head to retrieve the latest commit!!
