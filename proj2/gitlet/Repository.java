@@ -143,6 +143,31 @@ public class Repository {
     }
 
 
+    /**
+     * Now implementing the full version of commit.
+     * Steps:
+     * Clone the current HEAD commit
+     * Update the metadata according to the message provided by the user and the timestamp of the commit
+     * Also update the parent field so that it is pointing to the current HEAD
+     * Use the staging area to modify what files need to be updated (aka the files that it should be tracking)
+     * Update the HEAD and MASTER pointer so that it points to the latest commit
+     */
+    public static void commit(String commitMsg) {
+
+        // Initialize the commit object
+        Commit clonedHeadCommit;
+        // Get the current HEAD commit
+        clonedHeadCommit = Commit.getHeadCommit();
+        // Get the selfHashId from the current HEAD commit to be passed on to the new Commit object
+        String parentSha = clonedHeadCommit.getSelfHashId();
+        // Update the metadata of the commit such as msg, timestamp, and parentSha
+        clonedHeadCommit.updateMetadata(commitMsg, parentSha);
+
+        // TODO: How do I implement the Staging Area so that I can create my new Commit?
+
+    }
+
+
 
     /**
      * Creates default master branch
@@ -161,6 +186,8 @@ public class Repository {
     public static void setHeadTo(String commitHash) {
         writeContents(MASTER, commitHash);
     }
+
+
 
     /**
      * Boolean method that returns whether or not a gitlet directory is initialized.

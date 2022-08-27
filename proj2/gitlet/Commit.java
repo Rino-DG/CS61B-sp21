@@ -97,5 +97,35 @@ public class Commit implements Serializable {
         return selfHashId;
     }
 
+    /**
+     * Now implementing the full version of commit.
+     * Steps:
+     * Clone the current HEAD commit
+     * Update the metadata according to the message provided by the user and the timestamp of the commit
+     * Also update the parent field so that it is pointing to the current HEAD
+     * Use the staging area to modify what files need to be updated (aka the files that it should be tracking)
+     * Update the HEAD and MASTER pointer so that it points to the latest commit
+     */
+
+    /**
+     * Method that returns the HEAD commit, it uses a private helper method for cleaner code.
+     * @return
+     */
+    public static Commit getHeadCommit() {
+        String storedHeadSha = Utils.readContentsAsString(Repository.MASTER);
+        return getHeadCommit(storedHeadSha);
+    }
+    private static Commit getHeadCommit(String storedSha) {
+        File inCommitFile = Utils.join(Repository.OBJECT_DIR, storedSha);
+        Commit storedCommit;
+        storedCommit = Utils.readObject(inCommitFile, Commit.class);
+        return storedCommit;
+    }
+
+    public void updateMetadata(String message, String parentSha) {
+        this.message = message;
+        this.timestamp = new Date();
+        this.parent.add(parentSha);
+    }
 
 }

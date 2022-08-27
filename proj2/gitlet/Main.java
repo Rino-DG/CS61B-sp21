@@ -19,12 +19,18 @@ public class Main {
                 Repository.initiate();
 
             case "add":
-                // TODO: handle the `add [filename]` command
                 if (args.length > 1) {
                     String fileName = args[1];
                     // First check if the file exists
                     // If not print an error message and exit without changing anything
                     Repository.add(fileName);
+                }
+                break;
+
+            case "commit":
+                if (args.length > 1) {
+                    String commitMsg = args[1];
+                    Repository.commit(commitMsg);
                 }
                 break;
             default:
